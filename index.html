@@ -6,462 +6,415 @@
 <title>Introductory Phrases: Comma or No Comma?</title>
 
 <style>
-/* ======================================
-   BRAND COLORS (your palette)
-====================================== */
+/* =========================
+   Brand Palette (your colors)
+   ========================= */
 :root{
-  --pink: #ff6fa9;
-  --rose: #f4c2c2;
-  --latte: #b08968;
-  --creme: #fff8e7;
- : #7fa37c;
-  --charcoal: #2f3437;
+  --pink: #ff6fa9;          /* pink */
+  --rose: #f4c2c2;          /* soft rose */
+  --latte: #b08968;         /* latte brown */
+  --creme: #fff8e7;         /* crème */
+  --sage: #7fa37c;          /* sage green */
+  --charcoal: #2f3437;      /* charcoal */
 
   --accent: var(--pink);
   --accent-weak: #ffdbe8;
   --good: var(--sage);
   --bad: var(--pink);
   --border: #e0d4c9;
+  --shadow: 0 3px 10px rgba(0,0,0,.10);
 }
 
-/* General page styling */
+*{ box-sizing: border-box; }
 body{
   margin:0;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: var(--creme);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   color: var(--charcoal);
-  font-size: 20px;
+  font-size: 20px;            /* larger for 7th grade */
   line-height: 1.75;
+  background: none;           /* we use a full-screen background layer */
+}
+
+/* ===== Full-page background with soft overlay ===== */
+.page-bg{
+  position: fixed;
+  inset: 0;
+  background-image: url('teen-cafe.png'); /* <-- your background file */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;           /* subtle parallax on desktop */
+  z-index: -2;
+}
+.page-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  /* crème-tinted overlay for readability over the photo */
+  background: linear-gradient(
+    to bottom,
+    rgba(255,248,231,.86),
+    rgba(255,248,231,.90) 35%,
+    rgba(255,248,231,.94) 100%
+  );
+  z-index:-1;
+}
+
+/* Cards on top of the background */
+header, .teacher-box, .right-panel .card, .sentence-card, .left-card{
+  background:#ffffffd9;             /* slightly translucent white */
+  backdrop-filter: blur(2px);
+  border:1px solid var(--border);
+  border-radius:.9rem;
+  box-shadow: var(--shadow);
+}
+@media (prefers-reduced-transparency: reduce){
+  header, .teacher-box, .right-panel .card, .sentence-card, .left-card{
+    background:#fff; backdrop-filter:none;
+  }
 }
 
 /* Header */
 header{
-  padding: 1.2rem .5rem;
-  text-align: center;
-  background: linear-gradient(90deg, var(--rose), #ffe7f2 70%, #fff);
-  border-bottom: 4px solid var(--latte);
+  margin: 12px auto 10px;
+  padding: 1rem .9rem .9rem;
+  max-width: 1100px;
+  border: 2px solid var(--latte);
 }
-
-.title{
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 800;
-}
-
-.tagline{
-  margin-top: .25rem;
-  font-size: 1.1rem;
-  color: var(--charcoal);
-  opacity: .85;
-}
+.title{ margin:0; font-size: 2rem; font-weight: 800; }
+.tagline{ margin-top:.25rem; font-size:1.05rem; color:var(--charcoal); opacity:.85; }
 
 /* Teacher Rule Box */
 .teacher-box{
-  max-width: 900px;
-  margin: 1.1rem auto;
-  padding: 1rem;
-  display:flex;
-  gap:1rem;
-  border:2px solid var(--latte);
-  background:#fff;
-  border-radius:.8rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  max-width: 1100px; margin:10px auto 14px; padding:1rem;
+  display:flex; gap:1rem; align-items:flex-start;
 }
+.teacher-box img{ width:46px; height:46px; object-fit:cover; }
+.teacher-box .rule{ font-size:1.05rem; }
 
-.teacher-box img{
-  width:45px;
-}
+/* Layout: left bank | right content */
+main{ max-width: 1100px; margin: 0 auto 40px; padding: 0 12px; }
+.layout{ display:grid; gap:12px; grid-template-columns: 1fr; }
+@media (min-width: 980px){ .layout{ grid-template-columns: 320px 1fr; } }
 
-.teacher-box .rule{
-  font-size:1.05rem;
-}
-
-/* Layout */
-main{
-  max-width:900px;
-  margin: 1.5rem auto 3rem;
-  padding: 0 1rem;
-}
-
-.toolbar{
-  display:flex;
-  justify-content:center;
-  gap:.6rem;
-  margin-bottom:1.2rem;
-  flex-wrap:wrap;
-}
-
-button{
-  padding:.55rem 1rem;
-  border:none;
-  border-radius:.6rem;
-  font-weight:700;
-  font-size: 1rem;
-  background: var(--accent);
-  color:#fff;
-  cursor:pointer;
-  box-shadow:0 3px 6px rgba(0,0,0,.12);
-}
-
-button.secondary{
-  background: var(--charcoal);
-}
-
-button.ghost{
-  background: var(--accent-weak);
-  color: var(--accent);
-}
-
-/* Bank */
+/* LEFT: Comma bank card */
+.left-card{ padding:.9rem; }
+.left-card h3{ margin:.2rem 0 .55rem 0; font-size:1.1rem; }
 #bank{
+  display:flex; flex-wrap:wrap; gap:.55rem;
+  min-height:82px; padding:.7rem;
+  border:2px dashed var(--border); border-radius:.8rem;
   background:#fff2f6;
-  border:2px dashed var(--border);
-  border-radius:.75rem;
-  padding:.7rem;
-  min-height:80px;
-  display:flex;
-  gap:.6rem;
-  flex-wrap:wrap;
-  margin-bottom:1.5rem;
 }
-
-/* Tokens */
 .token{
-  background:#fff;
-  border:2px solid var(--accent);
-  border-radius:.7rem;
-  padding:.35rem .55rem;
-  font-size: 1.5rem;
-  cursor:grab;
-  display:flex;
-  align-items:center;
-  gap:.3rem;
-  box-shadow:0 2px 5px rgba(0,0,0,.15);
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.35rem .6rem; font-size:1.6rem;
+  background:#fff; border:2px solid var(--accent); border-radius:.7rem;
+  cursor:grab; user-select:none; box-shadow:0 2px 6px rgba(0,0,0,.10);
 }
+/* No icon inside comma tokens */
 
-.token img{
-  width:26px;
-  height:26px;
+/* RIGHT: directions, toolbar, sentences */
+.right-panel .card{ padding:1rem; margin-bottom:12px; }
+.right-panel h3{ margin:.1rem 0 .6rem 0; }
+
+/* Toolbar */
+.toolbar{
+  display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;
+  margin-top:.3rem; margin-bottom:.3rem;
 }
+button{
+  padding:.55rem 1rem; border:none; border-radius:.6rem;
+  font-weight:700; font-size:.98rem;
+  background: var(--accent); color:#fff; cursor:pointer; box-shadow: var(--shadow);
+}
+button.secondary{ background: var(--charcoal); }
+button.ghost{ background: var(--accent-weak); color: var(--accent); }
 
 /* Sentences */
-.sentence-card{
-  background:#fff;
-  padding:1rem;
-  border-radius:.8rem;
-  border:1px solid var(--border);
-  margin-bottom:1rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-
-.number{
-  font-weight:800;
-  font-size:1.3rem;
-  margin-right:.45rem;
-  color: var(--latte);
-}
-
-.word{
-  display:inline-block;
-  padding:.15rem .25rem;
-  position:relative;
-}
-
-.word.drop-target{
-  outline: 3px dashed var(--accent);
-  border-radius:.25rem;
-  background:#fff5fb;
-}
+.sentence-card{ padding:1rem; }
+.number{ font-weight:800; font-size:1.25rem; color:var(--latte); margin-right:.5rem; }
+.word{ display:inline-block; position:relative; padding:.1rem .25rem; }
+.word.drop-target{ outline:3px dashed var(--accent); border-radius:.25rem; background:#fff5fb; }
 
 /* Intro highlighting */
 .intro{
   text-decoration: underline wavy var(--sage) 2px;
-  text-underline-offset:4px;
-  background:#f0f7f1;
-  padding: 0 .2rem;
-  border-radius:.2rem;
+  text-underline-offset: 4px;
+  background:#f0f7f1; padding:0 .2rem; border-radius:.2rem;
 }
 
-/* Comma */
+/* Inserted comma */
 .comma-here{
-  font-size: 1.5rem;
-  font-weight:900;
-  color: var(--accent);
-  cursor:pointer;
+  font-size:1.6rem; font-weight:900; color: var(--accent);
+  cursor:pointer; margin-left:.1rem;
 }
 
 /* Feedback */
-.correct{
-  background:#ecf8ec !important;
-  box-shadow: inset 0 0 0 2px var(--good);
-}
+.correct{ background:#ecf8ec !important; box-shadow: inset 0 0 0 2px var(--good); }
+.incorrect{ background:#ffe6ef !important; box-shadow: inset 0 0 0 2px var(--bad); }
 
-.incorrect{
-  background:#ffe6ef !important;
-  box-shadow: inset 0 0 0 2px var(--bad);
-}
+.results{ text-align:center; font-weight:700; margin-top:.5rem; }
 </style>
 </head>
 
 <body>
+  <!-- Background layer -->
+  <div class="page-bg" aria-hidden="true"></div>
 
-<header>
-  <h1 class="title">Introductory Phrases: Comma or No Comma?</h1>
-  <div class="tagline">@WritersCafe208</div>
-</header>
+  <header>
+    <h1 class="title">Introductory Phrases: Comma or No Comma?</h1>
+    <div class="tagline">@WritersCafe208</div>
+  </header>
 
-<!-- Teacher rule box -->
-<div class="teacher-box">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png">
-  <div class="rule">
-    <strong>Teacher Rule:</strong> Write your classroom rule for punctuating sentences with introductory phrases here!
+  <!-- Teacher Rule Box (with apple) -->
+  <div class="teacher-box" role="note" aria-label="Teacher rule">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png" alt="Apple icon" />
+    <div class="rule">
+      <strong>Teacher Rule:</strong>
+      Use a comma <em>after</em> an introductory word, phrase, or dependent clause when it comes at the
+      <b>beginning</b> of the sentence (before the main clause). Do <em>not</em> use a comma when the same
+      element appears at the <b>end</b> of the sentence.<br/>
+      <small>
+        Example: <u>After the final bell</u>, we packed our bags. · We packed our bags <u>after the final bell</u>.
+      </small>
+    </div>
   </div>
-</div>
 
-<main>
+  <main>
+    <div class="layout">
+      <!-- LEFT: comma bank -->
+      <aside class="left-card">
+        <h3>Comma Bank</h3>
+        <div id="bank" aria-label="Comma bank (drag from here)"></div>
+        <p style="color:#666; font-size:.95rem; margin:.5rem 0 0;">
+          Drag any comma from the bank—there are unlimited commas.
+        </p>
+      </aside>
 
-<p style="text-align:center; max-width:750px; margin:0 auto 1.2rem;">
-  Drag a comma from the café‑themed bank. Place it after the introductory phrase only when it appears at the beginning of the sentence.
-</p>
+      <!-- RIGHT: directions + sentences -->
+      <section class="right-panel">
+        <div class="card directions">
+          <h3>Directions</h3>
+          <p>Drag a comma from the café‑themed bank.</p>
+          <p>Place it <b>after the introductory phrase</b> only when it appears at the <b>beginning</b> of the sentence.</p>
+          <p><b>You can click the comma to remove it</b> if you change your mind.</p>
 
-<div class="toolbar">
-  <button id="round1Btn" class="ghost">Round 1</button>
-  <button id="round2Btn" class="ghost">Round 2</button>
-  <button id="checkBtn">Check</button>
-  <button id="resetBtn" class="secondary">Reset</button>
-</div>
+          <div class="toolbar" aria-label="Round controls">
+            <button id="round1Btn" class="ghost">Round 1</button>
+            <button id="round2Btn" class="ghost">Round 2</button>
+            <button id="checkBtn">Check</button>
+            <button id="resetBtn" class="secondary">Reset</button>
+          </div>
+        </div>
 
-<!-- Bank -->
-<div id="bank"></div>
+        <div class="card">
+          <div id="sentences"></div>
+          <div id="results" class="results"></div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-<!-- Sentences -->
-<div id="sentences"></div>
+  <script>
+  /* =========================================
+     Rounds & Sentences (7th-grade appropriate)
+     ========================================= */
+  const ROUNDS = [
+    {
+      name: "Round 1",
+      items: [
+        { id:"1", intro:"After the final bell", rest:"the hallway exploded with chatter.", beginning:true },
+        { id:"2", intro:"In the early morning", rest:"the stadium lights still glowed.", beginning:true },
+        { id:"3", intro:"Before the science quiz", rest:"Mia reviewed her notes.", beginning:true },
+        { id:"4", intro:"With a nervous smile", rest:"Jordan stepped onto the stage.", beginning:true },
 
-<div id="results" style="text-align:center; margin-top:1rem; font-weight:700;"></div>
+        { id:"5", before:"The hallway exploded with chatter", intro:"after the final bell.", beginning:false },
+        { id:"6", before:"The stadium lights still glowed", intro:"in the early morning.", beginning:false },
+        { id:"7", before:"Mia reviewed her notes", intro:"before the science quiz.", beginning:false },
+        { id:"8", before:"Jordan stepped onto the stage", intro:"with a nervous smile.", beginning:false }
+      ]
+    },
+    {
+      name: "Round 2",
+      items: [
+        { id:"1", intro:"During the thunderstorm", rest:"we sheltered under the awning.", beginning:true },
+        { id:"2", intro:"On the bus ride home", rest:"I finished Chapter Five.", beginning:true },
+        { id:"3", intro:"At the edge of the field", rest:"a hawk hovered low.", beginning:true },
+        { id:"4", intro:"Without warning", rest:"the lights flickered and went out.", beginning:true },
 
-</main>
-
-<script>
-/* ============================================================
-   TWO ROUNDS OF SENTENCES — with click-to-remove commas
-============================================================ */
-const ROUNDS = [
-{
-  name:"Round 1",
-  items:[
-    { id:"1", intro:"After the final bell", rest:"the hallway exploded with chatter.", beginning:true },
-    { id:"2", intro:"In the early morning", rest:"the stadium lights still glowed.", beginning:true },
-    { id:"3", intro:"Before the science quiz", rest:"Mia reviewed her notes.", beginning:true },
-    { id:"4", intro:"With a nervous smile", rest:"Jordan stepped onto the stage.", beginning:true },
-    { id:"5", before:"The hallway exploded with chatter", intro:"after the final bell.", beginning:false },
-    { id:"6", before:"The stadium lights still glowed", intro:"in the early morning.", beginning:false },
-    { id:"7", before:"Mia reviewed her notes", intro:"before the science quiz.", beginning:false },
-    { id:"8", before:"Jordan stepped onto the stage", intro:"with a nervous smile.", beginning:false }
-  ]
-},
-{
-  name:"Round 2",
-  items:[
-    { id:"1", intro:"During the thunderstorm", rest:"we sheltered under the awning.", beginning:true },
-    { id:"2", intro:"On the bus ride home", rest:"I finished Chapter Five.", beginning:true },
-    { id:"3", intro:"At the edge of the field", rest:"a hawk hovered low.", beginning:true },
-    { id:"4", intro:"Without warning", rest:"the lights flickered and went out.", beginning:true },
-    { id:"5", before:"We sheltered under the awning", intro:"during the thunderstorm.", beginning:false },
-    { id:"6", before:"I finished Chapter Five", intro:"on the bus ride home.", beginning:false },
-    { id:"7", before:"A hawk hovered low", intro:"at the edge of the field.", beginning:false },
-    { id:"8", before:"The lights flickered and went out", intro:"without warning.", beginning:false }
-  ]
-}
-];
-
-let currentRound = 0;
-let placements = {}; // sentenceID → wordIndex where comma is dropped
-
-/* ============================================================
-   BUILD ROUND
-============================================================ */
-function buildRound(){
-  const round = ROUNDS[currentRound];
-  const box = document.getElementById("sentences");
-  box.innerHTML = "";
-  placements = {};
-
-  buildBank();
-
-  round.items.forEach(item=>{
-    const card = document.createElement("div");
-    card.className="sentence-card";
-
-    const num = document.createElement("span");
-    num.className="number";
-    num.textContent = item.id + ".";
-
-    const line = document.createElement("span");
-
-    let fullWords = [];
-
-    if(item.beginning){
-      fullWords = (item.intro + " " + item.rest).split(" ");
-    } else {
-      fullWords = (item.before + " " + item.intro).split(" ");
+        { id:"5", before:"We sheltered under the awning", intro:"during the thunderstorm.", beginning:false },
+        { id:"6", before:"I finished Chapter Five", intro:"on the bus ride home.", beginning:false },
+        { id:"7", before:"A hawk hovered low", intro:"at the edge of the field.", beginning:false },
+        { id:"8", before:"The lights flickered and went out", intro:"without warning.", beginning:false }
+      ]
     }
+  ];
 
-    fullWords.forEach((w,i)=>{
-      const span = document.createElement("span");
-      span.className="word";
-      span.textContent = w + " ";
-      span.dataset.sid = item.id;
-      span.dataset.index = i;
-      makeDropzone(span);
-      line.appendChild(span);
-    });
+  let currentRound = 0;
+  // sentence id -> word index where a comma is placed
+  const placements = new Map();
 
-    // highlight intro phrase words
-    if(item.beginning){
-      const introLength = item.intro.split(" ").length;
-      for(let i=0; i<introLength; i++){
-        const w = line.children[i];
-        w.classList.add("intro");
-      }
-    } else {
-      const beforeLength = item.before.split(" ").length;
-      const totalBefore = beforeLength;
-      const totalIntro = item.intro.split(" ").length;
-      for(let i=totalBefore; i<totalBefore+totalIntro; i++){
-        const w = line.children[i];
-        w.classList.add("intro");
-      }
-    }
-
-    card.appendChild(num);
-    card.appendChild(line);
-    box.appendChild(card);
-  });
-}
-
-/* ============================================================
-   BUILD INFINITE COMMA BANK
-============================================================ */
-function buildBank(){
-  const bank = document.getElementById("bank");
-  bank.innerHTML = "";
-
-  function makeToken(){
-    const tok = document.createElement("div");
-    tok.className="token";
-    tok.draggable=true;
-    tok.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/685/685352.png"><span>,</span>`;
-    prepDraggable(tok);
-    bank.appendChild(tok);
+  /* Build comma bank (infinite source) */
+  function buildBank(){
+    const bank = document.getElementById('bank');
+    bank.innerHTML = '';
+    const makeToken = () => {
+      const t = document.createElement('div');
+      t.className = 'token';
+      t.textContent = ',';                 // clean comma (no icon)
+      t.draggable = true;
+      t.addEventListener('dragstart', e => {
+        // infinite source: token stays in the bank
+        e.dataTransfer.setData('text/plain', 'comma');
+      });
+      bank.appendChild(t);
+    };
+    for (let i=0; i<12; i++) makeToken(); // visually plenty; logically infinite
   }
 
-  // generate 12 tokens (they infinitely respawn)
-  for(let i=0;i<12;i++){ makeToken(); }
-}
+  /* Build the round’s sentences */
+  function buildRound(){
+    const container = document.getElementById('sentences');
+    container.innerHTML = '';
+    placements.clear();
+    buildBank();
 
-/* DRAG */
-function prepDraggable(node){
-  node.addEventListener("dragstart", e=>{
-    e.dataTransfer.setData("text/plain","comma");
-  });
-}
+    const round = ROUNDS[currentRound];
+    round.items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'sentence-card';
 
-/* DROP + CLICK TO REMOVE */
-function makeDropzone(el){
-  el.addEventListener("dragover", e=>{
-    e.preventDefault();
-    el.classList.add("drop-target");
-  });
+      const num = document.createElement('span');
+      num.className = 'number';
+      num.textContent = item.id + '.';
 
-  el.addEventListener("dragleave", ()=> el.classList.remove("drop-target"));
+      const line = document.createElement('span');
 
-  el.addEventListener("drop", e=>{
-    e.preventDefault();
-    el.classList.remove("drop-target");
+      // Words of the sentence
+      const words = item.beginning
+        ? (item.intro + ' ' + item.rest).split(' ')
+        : (item.before + ' ' + item.intro).split(' ');
 
-    const sid = el.dataset.sid;
-    const index = parseInt(el.dataset.index);
+      words.forEach((w,i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = w + ' ';
+        span.dataset.sid = item.id;
+        span.dataset.index = String(i);
+        makeDropzone(span);
+        line.appendChild(span);
+      });
 
-    placements[sid] = index;
-
-    // insert comma into word
-    el.innerHTML = el.textContent + `<span class="comma-here">,</span>`;
-
-    // make comma removable
-    el.querySelector(".comma-here").onclick = ()=>{
-      el.querySelector(".comma-here").remove();
-      delete placements[sid];
-    };
-
-    buildBank(); // refresh infinite commas
-  });
-}
-
-/* CHECK ANSWERS */
-function checkAnswers(){
-  const round = ROUNDS[currentRound];
-  let correct = 0;
-
-  document.querySelectorAll(".word").forEach(w=>{
-    w.classList.remove("correct","incorrect");
-  });
-
-  round.items.forEach(item=>{
-    const sid = item.id;
-    const placed = placements[sid];
-    let correctIndex = null;
-
-    if(item.beginning){
-      correctIndex = item.intro.split(" ").length - 1;
-    }
-
-    // beginning → comma required
-    if(item.beginning){
-      if(placed === correctIndex){
-        mark(sid, correctIndex, "correct");
-        correct++;
+      // Highlight introductory phrase
+      if (item.beginning) {
+        const introLen = item.intro.split(' ').length;
+        for (let i = 0; i < introLen; i++) {
+          const introWord = line.querySelector(`.word[data-index="${i}"]`);
+          if (introWord) introWord.classList.add('intro');
+        }
       } else {
-        if(placed != null) mark(sid, placed, "incorrect");
-        mark(sid, correctIndex, "incorrect");
+        const beforeLen = item.before.split(' ').length;
+        const total = words.length;
+        for (let i = beforeLen; i < total; i++) {
+          const introWord = line.querySelector(`.word[data-index="${i}"]`);
+          if (introWord) introWord.classList.add('intro');
+        }
       }
-    }
 
-    // ending → comma forbidden
-    else {
-      if(placed == null){
-        correct++;
+      card.appendChild(num);
+      card.appendChild(line);
+      container.appendChild(card);
+    });
+
+    document.getElementById('results').textContent = '';
+  }
+
+  /* Drag & Drop on each word boundary */
+  function makeDropzone(node){
+    node.addEventListener('dragover', e => {
+      e.preventDefault();
+      node.classList.add('drop-target');
+    });
+    node.addEventListener('dragleave', () => node.classList.remove('drop-target'));
+    node.addEventListener('drop', e => {
+      e.preventDefault();
+      node.classList.remove('drop-target');
+
+      const sid = node.dataset.sid;
+      const index = parseInt(node.dataset.index, 10);
+
+      // Only one comma per sentence at a time: remove existing
+      document.querySelectorAll(`.comma-here[data-sid="${sid}"]`).forEach(c => c.remove());
+
+      // Insert comma span after this word
+      const comma = document.createElement('span');
+      comma.className = 'comma-here';
+      comma.dataset.sid = sid;
+      comma.textContent = ',';
+
+      // Click (or Enter/Space) to remove
+      comma.setAttribute('role','button');
+      comma.setAttribute('tabindex','0');
+      const remove = () => { comma.remove(); placements.delete(sid); };
+      comma.addEventListener('click', remove);
+      comma.addEventListener('keydown', ev => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); remove(); }
+      });
+
+      node.appendChild(comma);
+      placements.set(sid, index);
+    });
+  }
+
+  /* Check answers */
+  function checkAnswers(){
+    // Clear prior marks
+    document.querySelectorAll('.word').forEach(w => w.classList.remove('correct','incorrect'));
+
+    const round = ROUNDS[currentRound];
+    let correct = 0;
+    const total = round.items.length;
+
+    round.items.forEach(item => {
+      const sid = item.id;
+      const placed = placements.has(sid) ? placements.get(sid) : null;
+
+      let shouldIndex = null;
+      if (item.beginning) {
+        // comma should be after last word of the intro phrase
+        shouldIndex = item.intro.split(' ').length - 1;
+      }
+
+      if (item.beginning){
+        if (placed === shouldIndex){ mark(sid, shouldIndex, 'correct'); correct++; }
+        else {
+          if (placed !== null) mark(sid, placed, 'incorrect');
+          mark(sid, shouldIndex, 'incorrect');
+        }
       } else {
-        mark(sid, placed, "incorrect");
+        // Intro at end → no comma
+        if (placed === null) correct++;
+        else mark(sid, placed, 'incorrect');
       }
-    }
-  });
+    });
 
-  document.getElementById("results").textContent =
-    `${correct}/${round.items.length} correct`;
-}
+    document.getElementById('results').textContent = `${correct}/${total} correct`;
+  }
 
-/* Mark function */
-function mark(sid, idx, cls){
-  if(idx == null) return;
-  const w = document.querySelector(`.word[data-sid="${sid}"][data-index="${idx}"]`);
-  if(w) w.classList.add(cls);
-}
+  function mark(sid, idx, cls){
+    if (idx === null) return;
+    const node = document.querySelector(`.word[data-sid="${sid}"][data-index="${idx}"]`);
+    if (node) node.classList.add(cls);
+  }
 
-/* Reset */
-function resetRound(){
+  /* Buttons */
+  document.getElementById('round1Btn').addEventListener('click', () => { currentRound = 0; buildRound(); });
+  document.getElementById('round2Btn').addEventListener('click', () => { currentRound = 1; buildRound(); });
+  document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+  document.getElementById('resetBtn').addEventListener('click', () => buildRound());
+
+  // Initialize
   buildRound();
-  document.getElementById("results").textContent="";
-}
-
-/* Buttons */
-document.getElementById("round1Btn").onclick = ()=>{ currentRound=0; resetRound(); };
-document.getElementById("round2Btn").onclick = ()=>{ currentRound=1; resetRound(); };
-document.getElementById("checkBtn").onclick = checkAnswers;
-document.getElementById("resetBtn").onclick = resetRound;
-
-/* Start */
-buildRound();
-</script>
-
+  </script>
 </body>
 </html>
