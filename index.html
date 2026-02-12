@@ -23,93 +23,105 @@
   --bad: var(--pink);
   --border: #e0d4c9;
   --shadow: 0 3px 10px rgba(0,0,0,.10);
-
-  /* Composition tuning (adjust if you want to fine‑align to the background) */
-  --content-left-col: 35%;          /* left gutter; pushes content right */
- --bg-pos-x: 59%;                  /* background horizontal focal point */
 }
 
 /* Base */
 *{ box-sizing: border-box; }
+html, body { height: 100%; }
 body{
   margin:0;
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   color: var(--charcoal);
-  font-size: 20px;            /* accessible size for 7th grade */
+  font-size: 20px;              /* accessible size for 7th grade */
   line-height: 1.75;
-  background: none;           /* we use a full-screen background layer */
+  background: none;             /* background is handled by the fixed layer */
 }
 
-/* ===== Full-page background with soft overlay (prominent) ===== */
-.page-bg{
+/* ===== Strong full-page background with overlay ===== */
+.bg-wrap{
   position: fixed;
   inset: 0;
-  background-image: url('teen-cafe.png'); /* <-- your background file */
-  background-size: cover;                 /* always fill screen */
-  background-position: var(--bg-pos-x) center;  /* nudge focal point horizontally */
-  background-attachment: fixed;           /* subtle parallax on desktop */
   z-index: -2;
+  overflow: hidden;
 }
-/* Overlay + very soft vignette so text stays readable */
-.page-bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
+.bg-image{
+  position: absolute;
+  inset: 0;
+  background-image: url('teen-cafe.png');  /* your image in repo root */
+  background-size: cover;
+  /* Keep the focal point slightly right-of-center so content can sit in open space */
+  background-position: 60% center;         /* adjust to 55–65% if you ever want to fine tune */
+  background-attachment: fixed;
+}
+.bg-overlay{
+  position: absolute; inset: 0;
+  /* crème tint + very soft vignette so text stays readable without hiding the art */
   background:
-    radial-gradient(120% 140% at 80% 50%, rgba(0,0,0,.08), rgba(0,0,0,0) 45%),
-    linear-gradient(to bottom, rgba(255,248,231,.76), rgba(255,248,231,.82) 30%, rgba(255,248,231,.88) 100%);
-  z-index:-1;
+    radial-gradient(120% 140% at 80% 50%, rgba(0,0,0,.06), rgba(0,0,0,0) 45%),
+    linear-gradient(to bottom, rgba(255,248,231,.70), rgba(255,248,231,.78) 30%, rgba(255,248,231,.84) 100%);
 }
 
-/* Cards on top of the background (slightly translucent for more image) */
-header, .teacher-box, .panel{
-  background:#ffffffcc; /* ~80% white */
+/* ===== Page frame: a fixed-width content column aligned to the right “third” ===== */
+.frame{
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)                 /* flexible left spacer over the image */
+    min(840px, 92vw);              /* fixed content column on the right */
+  gap: clamp(12px, 2vw, 24px);
+  align-content: start;
+  padding: clamp(10px, 1.8vw, 18px);
+}
+
+/* Header and panels use translucent white so the background remains visible */
+header, .panel, .rule-box{
+  background: #ffffffcc;           /* ~80% white */
   backdrop-filter: blur(2px);
   border: 1px solid var(--border);
-  border-radius:.9rem;
+  border-radius: .9rem;
   box-shadow: var(--shadow);
 }
+
+/* If a user prefers less transparency, respect that */
 @media (prefers-reduced-transparency: reduce){
-  header, .teacher-box, .panel{ background:#fff; backdrop-filter:none; }
+  header, .panel, .rule-box{ background: #fff; backdrop-filter: none; }
 }
 
 /* Header */
 header{
-  margin: 12px auto 10px;
+  grid-column: 2;                  /* lock to the content column */
   padding: 1rem .9rem .9rem;
-  max-width: 1200px;
   border: 2px solid var(--latte);
 }
-.title{ margin:0; font-size: 2rem; font-weight: 800; }
-.tagline{ margin-top:.25rem; font-size:1.05rem; color:var(--charcoal); opacity:.85; }
+.title{ margin:0; font-size:2rem; font-weight:800; }
+.tagline{ margin-top:.25rem; font-size:1.05rem; color: var(--charcoal); opacity:.85; }
 
 /* Teacher Rule Box */
-.teacher-box{
-  max-width: 1200px; margin:10px auto 14px; padding:1rem;
-  display:flex; gap:1rem; align-items:flex-start;
-}
-.teacher-box img{ width:46px; height:46px; object-fit:cover; }
-.teacher-box .rule{ font-size:1.05rem; }
-
-/* Main layout: pushes content to the right to align with background composition */
-main{ max-width: 1200px; margin: 0 auto 40px; padding: 0 clamp(12px, 4vw, 32px); }
-.grid{
-  display:grid; gap: clamp(12px, 2.5vw, 24px);
-  grid-template-columns: 1fr;             /* mobile */
+.rule-box{
+  grid-column: 2;
+  margin-top: 12px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
   align-items: start;
 }
-@media (min-width: 980px){
-  .grid{
-    /* left gutter (empty) + right content */
-    grid-template-columns: minmax(0, var(--content-left-col)) minmax(320px, 1fr);
-  }
+.rule-box img{ width:46px; height:46px; object-fit: cover; }
+.rule-box .rule{ font-size:1.05rem; }
+
+/* Main content column (everything else) */
+.main{
+  grid-column: 2;
+  display: grid;
+  gap: clamp(12px, 2vw, 20px);
+  margin-bottom: 40px;
 }
 
-/* Right column panels (Directions+Bank and Sentences) */
+/* Directions + Comma Bank share a panel */
 .panel{ padding: 1rem; }
 .panel h3{ margin:.1rem 0 .6rem 0; }
 
-/* Toolbar (rounds & check) */
+/* Toolbar */
 .toolbar{
   display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;
   margin:.4rem 0 .6rem;
@@ -122,7 +134,7 @@ button{
 button.secondary{ background: var(--charcoal); }
 button.ghost{ background: var(--accent-weak); color: var(--accent); }
 
-/* Comma Bank placed under Directions */
+/* Comma Bank sits directly under Directions */
 .bank{
   margin-top:.6rem;
   background:#fff2f6;
@@ -141,7 +153,11 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
 /* No icon inside comma tokens */
 
 /* Sentences */
-.sentence-card{ padding:1rem; background:#ffffffcc; backdrop-filter: blur(2px); border:1px solid var(--border); border-radius:.9rem; box-shadow: var(--shadow); }
+.sentence-card{
+  padding:1rem;
+  background:#ffffffcc; backdrop-filter: blur(2px);
+  border:1px solid var(--border); border-radius:.9rem; box-shadow: var(--shadow);
+}
 .number{ font-weight:800; font-size:1.25rem; color: var(--latte); margin-right:.5rem; }
 .word{ display:inline-block; position:relative; padding:.1rem .25rem; }
 .word.drop-target{ outline:3px dashed var(--accent); border-radius:.25rem; background:#fff5fb; }
@@ -164,67 +180,70 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
 .incorrect{ background:#ffe6ef !important; box-shadow: inset 0 0 0 2px var(--bad); }
 
 .results{ text-align:center; font-weight:700; margin-top:.5rem; }
-.small-note{ color:#666; font-size:.95rem; margin:.4rem 0 0; }
+
+/* Responsive details */
+@media (max-width: 979.98px){
+  .frame{ grid-template-columns: 1fr; }
+  header, .rule-box, .main{ grid-column: 1; }
+  .bg-image{ background-position: 50% center; } /* center the subject on phones */
+}
 </style>
 </head>
 
 <body>
-  <!-- Prominent background layer -->
-  <div class="page-bg" aria-hidden="true"></div>
-
-  <header>
-    <h1 class="title">Introductory Phrases: Comma or No Comma?</h1>
-    <div class="tagline">@WritersCafe208</div>
-  </header>
-
-  <!-- Teacher Rule Box -->
-  <div class="teacher-box" role="note" aria-label="Teacher rule">
-    <img alt="apple icon" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png" />
-    <div class="rule">
-      <strong>Teacher Rule:</strong>
-      Use a comma <em>after</em> an introductory word, phrase, or dependent clause when it comes at the
-      <b>beginning</b> of the sentence (before the main clause). Do <em>not</em> use a comma when the same
-      element appears at the <b>end</b> of the sentence.<br/>
-      <small>
-        Example: <u>After the final bell</u>, we packed our bags. · We packed our bags <u>after the final bell</u>.
-      </small>
-    </div>
+  <!-- Strong background + overlay -->
+  <div class="bg-wrap" aria-hidden="true">
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
   </div>
 
-  <main>
-    <div class="grid">
-      <!-- Column 1: empty spacer on desktop to align with background composition -->
-      <div aria-hidden="true"></div>
+  <div class="frame">
+    <header>
+      <h1 class="title">Introductory Phrases: Comma or No Comma?</h1>
+      <div class="tagline">@WritersCafe208</div>
+    </header>
 
-      <!-- Column 2: content -->
-      <div>
-        <!-- Directions + Bank (one panel) -->
-        <section class="panel">
-          <h3>Directions</h3>
-          <p>Drag a comma from the café‑themed bank.</p>
-          <p>Place it <b>after the introductory phrase</b> only when it appears at the <b>beginning</b> of the sentence.</p>
-          <p><b>You can click the comma to remove it</b> if you change your mind.</p>
-
-          <div class="toolbar" aria-label="Round controls">
-            <button id="round1Btn" class="ghost">Round 1</button>
-            <button id="round2Btn" class="ghost">Round 2</button>
-            <button id="checkBtn">Check</button>
-            <button id="resetBtn" class="secondary">Reset</button>
-          </div>
-
-          <h3 style="margin-top:.2rem;">Comma Bank</h3>
-          <div id="bank" class="bank" aria-label="Comma bank (drag from here)"></div>
-          <p class="small-note">There are unlimited commas.</p>
-        </section>
-
-        <!-- Sentences -->
-        <section class="panel">
-          <div id="sentences"></div>
-          <div id="results" class="results"></div>
-        </section>
+    <!-- Teacher Rule Box with apple icon + written rule -->
+    <div class="rule-box" role="note" aria-label="Teacher rule">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png" alt="Apple icon" />
+      <div class="rule">
+        <strong>Teacher Rule:</strong>
+        Use a comma <em>after</em> an introductory word, phrase, or dependent clause when it comes at the
+        <b>beginning</b> of the sentence (before the main clause). Do <em>not</em> use a comma when the same
+        element appears at the <b>end</b> of the sentence.<br/>
+        <small>
+          Example: <u>After the final bell</u>, we packed our bags. · We packed our bags <u>after the final bell</u>.
+        </small>
       </div>
     </div>
-  </main>
+
+    <main class="main">
+      <!-- Directions + Comma Bank -->
+      <section class="panel">
+        <h3>Directions</h3>
+        <p>Drag a comma from the café‑themed bank.</p>
+        <p>Place it <b>after the introductory phrase</b> only when it appears at the <b>beginning</b> of the sentence.</p>
+        <p><b>You can click the comma to remove it</b> if you change your mind.</p>
+
+        <div class="toolbar" aria-label="Round controls">
+          <button id="round1Btn" class="ghost">Round 1</button>
+          <button id="round2Btn" class="ghost">Round 2</button>
+          <button id="checkBtn">Check</button>
+          <button id="resetBtn" class="secondary">Reset</button>
+        </div>
+
+        <h3 style="margin-top:.2rem;">Comma Bank</h3>
+        <div id="bank" class="bank" aria-label="Comma bank (drag from here)"></div>
+        <p style="color:#666; font-size:.95rem; margin:.4rem 0 0;">There are unlimited commas.</p>
+      </section>
+
+      <!-- Sentences -->
+      <section class="panel">
+        <div id="sentences"></div>
+        <div id="results" class="results"></div>
+      </section>
+    </main>
+  </div>
 
   <script>
   /* =========================================
@@ -421,7 +440,8 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
   /* Buttons */
   document.getElementById('round1Btn').addEventListener('click', () => { currentRound = 0; buildRound(); });
   document.getElementById('round2Btn').addEventListener('click', () => { currentRound = 1; buildRound(); });
-  document.getElementById('checkBtn').addEventListenerment.getElementById('resetBtn').addEventListener('click', () => buildRound());
+  document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+  document.getElementById('resetBtn').addEventListener('click', () => buildRound());
 
   // Initialize
   buildRound();
