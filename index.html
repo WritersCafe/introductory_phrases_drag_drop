@@ -7,23 +7,21 @@
 
 <style>
 /* ======================================
-   BRAND PALETTE (your tones)
+   BRAND COLORS (your palette)
 ====================================== */
 :root{
   --pink: #ff6fa9;
   --rose: #f4c2c2;
   --latte: #b08968;
   --creme: #fff8e7;
-  --sage: #7fa37c;
+ : #7fa37c;
   --charcoal: #2f3437;
 
-  --bg: var(--creme);
   --accent: var(--pink);
   --accent-weak: #ffdbe8;
   --good: var(--sage);
   --bad: var(--pink);
-
-  --border: #dfd2c7;
+  --border: #e0d4c9;
 }
 
 /* General page styling */
@@ -32,155 +30,174 @@ body{
   font-family: "Segoe UI", system-ui, sans-serif;
   background: var(--creme);
   color: var(--charcoal);
-  font-size: 20px; /* INCREASED FONT SIZE */
+  font-size: 20px;
   line-height: 1.75;
 }
 
+/* Header */
 header{
-  padding: 1.2rem 1rem;
-  background: linear-gradient(90deg, var(--rose), #ffeaf1 70%, #fff);
-  border-bottom: 4px solid var(--latte);
+  padding: 1.2rem .5rem;
   text-align: center;
+  background: linear-gradient(90deg, var(--rose), #ffe7f2 70%, #fff);
+  border-bottom: 4px solid var(--latte);
 }
 
 .title{
-  font-size: 2rem;
   margin: 0;
+  font-size: 2rem;
   font-weight: 800;
-  color: var(--charcoal);
 }
 
 .tagline{
-  margin: .3rem 0 0;
-  font-size: 1.05rem;
+  margin-top: .25rem;
+  font-size: 1.1rem;
   color: var(--charcoal);
-  opacity: .8;
+  opacity: .85;
 }
 
-.subtitle{
-  margin-top: .6rem;
-  color: #555;
+/* Teacher Rule Box */
+.teacher-box{
   max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1.1rem auto;
+  padding: 1rem;
+  display:flex;
+  gap:1rem;
+  border:2px solid var(--latte);
+  background:#fff;
+  border-radius:.8rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
 }
 
+.teacher-box img{
+  width:45px;
+}
+
+.teacher-box .rule{
+  font-size:1.05rem;
+}
+
+/* Layout */
 main{
-  max-width: 900px;
-  margin: 1.5rem auto;
-  padding: 0 1rem 3rem;
+  max-width:900px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1rem;
 }
 
-/* Toolbar */
 .toolbar{
   display:flex;
-  flex-wrap:wrap;
-  gap:.6rem;
-  margin-bottom: 1.5rem;
   justify-content:center;
+  gap:.6rem;
+  margin-bottom:1.2rem;
+  flex-wrap:wrap;
 }
 
 button{
   padding:.55rem 1rem;
-  font-size: .95rem;
   border:none;
   border-radius:.6rem;
-  font-weight: 700;
-  cursor:pointer;
+  font-weight:700;
+  font-size: 1rem;
   background: var(--accent);
   color:#fff;
-  box-shadow: 0 3px 6px rgba(0,0,0,.12);
+  cursor:pointer;
+  box-shadow:0 3px 6px rgba(0,0,0,.12);
 }
+
 button.secondary{
   background: var(--charcoal);
 }
+
 button.ghost{
   background: var(--accent-weak);
   color: var(--accent);
 }
 
-/* Cafe sticker tokens */
-.token{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.35rem;
-  background:#fff;
-  border:2px solid var(--accent);
-  border-radius: .7rem;
-  padding:.35rem .55rem;
-  cursor:grab;
-  font-size: 1.4rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,.12);
-}
-.token img{
-  width: 26px;
-  height:26px;
-}
-
 /* Bank */
 #bank{
+  background:#fff2f6;
+  border:2px dashed var(--border);
+  border-radius:.75rem;
+  padding:.7rem;
+  min-height:80px;
   display:flex;
+  gap:.6rem;
   flex-wrap:wrap;
-  gap:.5rem;
-  padding: .7rem;
-  min-height: 70px;
-  background: #fff2f6;
-  border: 2px dashed var(--border);
+  margin-bottom:1.5rem;
+}
+
+/* Tokens */
+.token{
+  background:#fff;
+  border:2px solid var(--accent);
   border-radius:.7rem;
+  padding:.35rem .55rem;
+  font-size: 1.5rem;
+  cursor:grab;
+  display:flex;
+  align-items:center;
+  gap:.3rem;
+  box-shadow:0 2px 5px rgba(0,0,0,.15);
+}
+
+.token img{
+  width:26px;
+  height:26px;
 }
 
 /* Sentences */
 .sentence-card{
   background:#fff;
-  padding: 1rem;
+  padding:1rem;
+  border-radius:.8rem;
   border:1px solid var(--border);
-  border-radius:.75rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
 .number{
-  font-weight: 800;
+  font-weight:800;
+  font-size:1.3rem;
+  margin-right:.45rem;
   color: var(--latte);
-  font-size: 1.3rem;
-  margin-right: .6rem;
 }
 
-.intro{
-  text-decoration: underline wavy var(--sage) 2px;
-  text-underline-offset:4px;
-  background: #f0f7f1;
-  padding: 0 .15rem;
-  border-radius:.2rem;
-}
-
-/* draggable comma placement */
 .word{
   display:inline-block;
-  padding: .1rem .2rem;
+  padding:.15rem .25rem;
   position:relative;
 }
 
 .word.drop-target{
   outline: 3px dashed var(--accent);
-  border-radius: .25rem;
-  background: #fff5fb;
+  border-radius:.25rem;
+  background:#fff5fb;
 }
 
+/* Intro highlighting */
+.intro{
+  text-decoration: underline wavy var(--sage) 2px;
+  text-underline-offset:4px;
+  background:#f0f7f1;
+  padding: 0 .2rem;
+  border-radius:.2rem;
+}
+
+/* Comma */
 .comma-here{
-  font-size: 1.6rem;
-  font-weight: 900;
+  font-size: 1.5rem;
+  font-weight:900;
   color: var(--accent);
-  margin-left: .25rem;
+  cursor:pointer;
 }
 
+/* Feedback */
 .correct{
-  background: #e9f5e9 !important;
+  background:#ecf8ec !important;
   box-shadow: inset 0 0 0 2px var(--good);
 }
+
 .incorrect{
-  background: #ffe4ee !important;
+  background:#ffe6ef !important;
   box-shadow: inset 0 0 0 2px var(--bad);
 }
 </style>
@@ -191,24 +208,28 @@ button.ghost{
 <header>
   <h1 class="title">Introductory Phrases: Comma or No Comma?</h1>
   <div class="tagline">@WritersCafe208</div>
-  <p class="subtitle">
-    Drag a comma <b>,</b> from the café‑themed bank.  
-    If the introductory phrase is at the <b>beginning</b>, drop the comma right after it.  
-    If the introductory phrase comes at the <b>end</b>, do <i>not</i> drop a comma anywhere.
-  </p>
 </header>
 
+<!-- Teacher rule box -->
+<div class="teacher-box">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png">
+  <div class="rule">
+    <strong>Teacher Rule:</strong> Write your classroom rule for punctuating sentences with introductory phrases here!
+  </div>
+</div>
+
 <main>
+
+<p style="text-align:center; max-width:750px; margin:0 auto 1.2rem;">
+  Drag a comma from the café‑themed bank. Place it after the introductory phrase only when it appears at the beginning of the sentence.
+</p>
 
 <div class="toolbar">
   <button id="round1Btn" class="ghost">Round 1</button>
   <button id="round2Btn" class="ghost">Round 2</button>
   <button id="checkBtn">Check</button>
-  <button id="revealBtn" class="secondary">Reveal</button>
   <button id="resetBtn" class="secondary">Reset</button>
 </div>
-
-<h2 id="roundTitle" style="text-align:center; margin-bottom:1rem;">Round 1</h2>
 
 <!-- Bank -->
 <div id="bank"></div>
@@ -216,17 +237,14 @@ button.ghost{
 <!-- Sentences -->
 <div id="sentences"></div>
 
-<div id="results" style="margin-top:1rem; font-weight:700; text-align:center;"></div>
+<div id="results" style="text-align:center; margin-top:1rem; font-weight:700;"></div>
 
 </main>
 
-
 <script>
-/* ============================
-   TWO ROUNDS OF SENTENCES
-   (same as before but structure
-   now supports no-slot system)
-============================ */
+/* ============================================================
+   TWO ROUNDS OF SENTENCES — with click-to-remove commas
+============================================================ */
 const ROUNDS = [
 {
   name:"Round 1",
@@ -235,11 +253,10 @@ const ROUNDS = [
     { id:"2", intro:"In the early morning", rest:"the stadium lights still glowed.", beginning:true },
     { id:"3", intro:"Before the science quiz", rest:"Mia reviewed her notes.", beginning:true },
     { id:"4", intro:"With a nervous smile", rest:"Jordan stepped onto the stage.", beginning:true },
-
     { id:"5", before:"The hallway exploded with chatter", intro:"after the final bell.", beginning:false },
     { id:"6", before:"The stadium lights still glowed", intro:"in the early morning.", beginning:false },
     { id:"7", before:"Mia reviewed her notes", intro:"before the science quiz.", beginning:false },
-    { id:"8", before:"Jordan stepped onto the stage", intro:"with a nervous smile.", beginning:false },
+    { id:"8", before:"Jordan stepped onto the stage", intro:"with a nervous smile.", beginning:false }
   ]
 },
 {
@@ -249,68 +266,70 @@ const ROUNDS = [
     { id:"2", intro:"On the bus ride home", rest:"I finished Chapter Five.", beginning:true },
     { id:"3", intro:"At the edge of the field", rest:"a hawk hovered low.", beginning:true },
     { id:"4", intro:"Without warning", rest:"the lights flickered and went out.", beginning:true },
-
     { id:"5", before:"We sheltered under the awning", intro:"during the thunderstorm.", beginning:false },
     { id:"6", before:"I finished Chapter Five", intro:"on the bus ride home.", beginning:false },
     { id:"7", before:"A hawk hovered low", intro:"at the edge of the field.", beginning:false },
-    { id:"8", before:"The lights flickered and went out", intro:"without warning.", beginning:false },
+    { id:"8", before:"The lights flickered and went out", intro:"without warning.", beginning:false }
   ]
 }
 ];
 
 let currentRound = 0;
-let placements = {};  // sentenceID → wordIndex where comma was dropped
+let placements = {}; // sentenceID → wordIndex where comma is dropped
 
-/* =====================
+/* ============================================================
    BUILD ROUND
-===================== */
+============================================================ */
 function buildRound(){
   const round = ROUNDS[currentRound];
-  document.getElementById("roundTitle").textContent = round.name;
   const box = document.getElementById("sentences");
   box.innerHTML = "";
   placements = {};
+
+  buildBank();
 
   round.items.forEach(item=>{
     const card = document.createElement("div");
     card.className="sentence-card";
 
-    // Number only (no "Sentence")
     const num = document.createElement("span");
     num.className="number";
     num.textContent = item.id + ".";
 
     const line = document.createElement("span");
 
-    let words = [];
+    let fullWords = [];
+
     if(item.beginning){
-      words = (item.intro + " " + item.rest).split(" ");
+      fullWords = (item.intro + " " + item.rest).split(" ");
     } else {
-      words = (item.before + " " + item.intro).split(" ");
+      fullWords = (item.before + " " + item.intro).split(" ");
     }
 
-    words.forEach((w,i)=>{
+    fullWords.forEach((w,i)=>{
       const span = document.createElement("span");
       span.className="word";
       span.textContent = w + " ";
-      span.setAttribute("data-sid", item.id);
-      span.setAttribute("data-index", i);
+      span.dataset.sid = item.id;
+      span.dataset.index = i;
       makeDropzone(span);
       line.appendChild(span);
     });
 
-    // Intro phrase highlighting
+    // highlight intro phrase words
     if(item.beginning){
-      let introWords = item.intro.split(" ").length;
-      for(let i=0; i<introWords; i++){
-        line.children[i].classList.add("intro");
+      const introLength = item.intro.split(" ").length;
+      for(let i=0; i<introLength; i++){
+        const w = line.children[i];
+        w.classList.add("intro");
       }
     } else {
-      // intro at end:
-      let introWords = item.intro.split(" ").length;
-      let total = line.children.length;
-      for(let i = total-introWords; i < total; i++){
-        line.children[i].classList.add("intro");
+      const beforeLength = item.before.split(" ").length;
+      const totalBefore = beforeLength;
+      const totalIntro = item.intro.split(" ").length;
+      for(let i=totalBefore; i<totalBefore+totalIntro; i++){
+        const w = line.children[i];
+        w.classList.add("intro");
       }
     }
 
@@ -318,75 +337,71 @@ function buildRound(){
     card.appendChild(line);
     box.appendChild(card);
   });
-
-  buildBank();
 }
 
-/* =====================
-   COMMA BANK (infinity)
-===================== */
+/* ============================================================
+   BUILD INFINITE COMMA BANK
+============================================================ */
 function buildBank(){
   const bank = document.getElementById("bank");
   bank.innerHTML = "";
 
-  // Infinity commas = recreate one token each drag
-  function createToken(){
+  function makeToken(){
     const tok = document.createElement("div");
     tok.className="token";
-    tok.draggable = true;
-
-    // café‑theme sticker (latte cup)
-    tok.innerHTML = `<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAIElEQVQoz2NgQAP/GZgY/jMwMDCIgwNDwzDQYAwMAwMjMIAOwABsPBBF6edwAAAABJRU5ErkJggg==" />
-                     <span>,</span>`;
+    tok.draggable=true;
+    tok.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/685/685352.png"><span>,</span>`;
     prepDraggable(tok);
     bank.appendChild(tok);
   }
-  createToken();
+
+  // generate 12 tokens (they infinitely respawn)
+  for(let i=0;i<12;i++){ makeToken(); }
 }
 
-/* ==================================
-   DRAG + DROP
-================================== */
+/* DRAG */
 function prepDraggable(node){
   node.addEventListener("dragstart", e=>{
     e.dataTransfer.setData("text/plain","comma");
-    e.dataTransfer.effectAllowed="copy";
   });
 }
 
+/* DROP + CLICK TO REMOVE */
 function makeDropzone(el){
   el.addEventListener("dragover", e=>{
     e.preventDefault();
     el.classList.add("drop-target");
   });
+
   el.addEventListener("dragleave", ()=> el.classList.remove("drop-target"));
 
   el.addEventListener("drop", e=>{
     e.preventDefault();
     el.classList.remove("drop-target");
 
-    const sid = el.getAttribute("data-sid");
-    const index = parseInt(el.getAttribute("data-index"));
+    const sid = el.dataset.sid;
+    const index = parseInt(el.dataset.index);
 
     placements[sid] = index;
 
-    // visually insert comma
+    // insert comma into word
     el.innerHTML = el.textContent + `<span class="comma-here">,</span>`;
 
-    // rebuild bank to regenerate infinite commas
-    buildBank();
+    // make comma removable
+    el.querySelector(".comma-here").onclick = ()=>{
+      el.querySelector(".comma-here").remove();
+      delete placements[sid];
+    };
+
+    buildBank(); // refresh infinite commas
   });
 }
 
-/* =====================
-   CHECK ANSWERS
-===================== */
+/* CHECK ANSWERS */
 function checkAnswers(){
   const round = ROUNDS[currentRound];
   let correct = 0;
-  let total = round.items.length;
 
-  // Clear old markings
   document.querySelectorAll(".word").forEach(w=>{
     w.classList.remove("correct","incorrect");
   });
@@ -394,86 +409,58 @@ function checkAnswers(){
   round.items.forEach(item=>{
     const sid = item.id;
     const placed = placements[sid];
+    let correctIndex = null;
 
-    // Determine where comma *should* be:
-    let shouldIndex = null;
     if(item.beginning){
-      shouldIndex = item.intro.split(" ").length - 1;
+      correctIndex = item.intro.split(" ").length - 1;
     }
 
-    // Apply correctness classes
+    // beginning → comma required
     if(item.beginning){
-      if(placed === shouldIndex){
-        mark(sid, shouldIndex,"correct");
+      if(placed === correctIndex){
+        mark(sid, correctIndex, "correct");
         correct++;
       } else {
-        mark(sid, placed,"incorrect");
-        mark(sid, shouldIndex,"incorrect");
+        if(placed != null) mark(sid, placed, "incorrect");
+        mark(sid, correctIndex, "incorrect");
       }
-    } else {
-      // ending → no comma must be placed
+    }
+
+    // ending → comma forbidden
+    else {
       if(placed == null){
         correct++;
       } else {
-        mark(sid, placed,"incorrect");
+        mark(sid, placed, "incorrect");
       }
     }
   });
 
-  document.getElementById("results").innerHTML =
-    `<span style="color:${correct===total? 'var(--good)' : 'var(--bad)'};">
-      ${correct}/${total} correct
-    </span>`;
+  document.getElementById("results").textContent =
+    `${correct}/${round.items.length} correct`;
 }
 
+/* Mark function */
 function mark(sid, idx, cls){
   if(idx == null) return;
   const w = document.querySelector(`.word[data-sid="${sid}"][data-index="${idx}"]`);
   if(w) w.classList.add(cls);
 }
 
-/* =====================
-   REVEAL
-===================== */
-function revealAnswers(){
-  const round = ROUNDS[currentRound];
-  placements = {}; // clear placement
-
-  // remove all inserted commas
-  document.querySelectorAll(".comma-here").forEach(c=>c.remove());
-
-  round.items.forEach(item=>{
-    if(item.beginning){
-      let targetIndex = item.intro.split(" ").length - 1;
-      placements[item.id] = targetIndex;
-      const w = document.querySelector(`.word[data-sid="${item.id}"][data-index="${targetIndex}"]`);
-      w.innerHTML = w.textContent + `<span class="comma-here">,</span>`;
-    }
-  });
-
-  checkAnswers();
-}
-
-/* =====================
-   RESET
-===================== */
+/* Reset */
 function resetRound(){
   buildRound();
   document.getElementById("results").textContent="";
 }
 
-/* =====================
-   BUTTONS
-===================== */
-document.getElementById("round1Btn").onclick=()=>{currentRound=0;resetRound();}
-document.getElementById("round2Btn").onclick=()=>{currentRound=1;resetRound();}
-document.getElementById("checkBtn").onclick=checkAnswers;
-document.getElementById("revealBtn").onclick=revealAnswers;
-document.getElementById("resetBtn").onclick=resetRound;
+/* Buttons */
+document.getElementById("round1Btn").onclick = ()=>{ currentRound=0; resetRound(); };
+document.getElementById("round2Btn").onclick = ()=>{ currentRound=1; resetRound(); };
+document.getElementById("checkBtn").onclick = checkAnswers;
+document.getElementById("resetBtn").onclick = resetRound;
 
-/* init */
+/* Start */
 buildRound();
-
 </script>
 
 </body>
