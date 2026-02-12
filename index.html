@@ -23,61 +23,61 @@
   --bad: var(--pink);
   --border: #e0d4c9;
   --shadow: 0 3px 10px rgba(0,0,0,.10);
+
+  /* Composition tuning (adjust if you want to fine‑align to the background) */
+  --content-left-col: 36%;          /* left gutter; pushes content right */
+  --bg-pos-x: 62%;                  /* background horizontal focal point */
 }
 
+/* Base */
 *{ box-sizing: border-box; }
 body{
   margin:0;
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   color: var(--charcoal);
-  font-size: 20px;            /* larger for 7th grade */
+  font-size: 20px;            /* accessible size for 7th grade */
   line-height: 1.75;
   background: none;           /* we use a full-screen background layer */
 }
 
-/* ===== Full-page background with soft overlay ===== */
+/* ===== Full-page background with soft overlay (prominent) ===== */
 .page-bg{
   position: fixed;
   inset: 0;
   background-image: url('teen-cafe.png'); /* <-- your background file */
-  background-size: cover;
-  background-position: center;
+  background-size: cover;                 /* always fill screen */
+  background-position: var(--bg-pos-x) center;  /* nudge focal point horizontally */
   background-attachment: fixed;           /* subtle parallax on desktop */
   z-index: -2;
 }
+/* Overlay + very soft vignette so text stays readable */
 .page-bg::after{
   content:"";
   position:absolute;
   inset:0;
-  /* crème-tinted overlay for readability over the photo */
-  background: linear-gradient(
-    to bottom,
-    rgba(255,248,231,.86),
-    rgba(255,248,231,.90) 35%,
-    rgba(255,248,231,.94) 100%
-  );
+  background:
+    radial-gradient(120% 140% at 80% 50%, rgba(0,0,0,.08), rgba(0,0,0,0) 45%),
+    linear-gradient(to bottom, rgba(255,248,231,.76), rgba(255,248,231,.82) 30%, rgba(255,248,231,.88) 100%);
   z-index:-1;
 }
 
-/* Cards on top of the background */
-header, .teacher-box, .right-panel .card, .sentence-card, .left-card{
-  background:#ffffffd9;             /* slightly translucent white */
+/* Cards on top of the background (slightly translucent for more image) */
+header, .teacher-box, .panel{
+  background:#ffffffcc; /* ~80% white */
   backdrop-filter: blur(2px);
-  border:1px solid var(--border);
+  border: 1px solid var(--border);
   border-radius:.9rem;
   box-shadow: var(--shadow);
 }
 @media (prefers-reduced-transparency: reduce){
-  header, .teacher-box, .right-panel .card, .sentence-card, .left-card{
-    background:#fff; backdrop-filter:none;
-  }
+  header, .teacher-box, .panel{ background:#fff; backdrop-filter:none; }
 }
 
 /* Header */
 header{
   margin: 12px auto 10px;
   padding: 1rem .9rem .9rem;
-  max-width: 1100px;
+  max-width: 1200px;
   border: 2px solid var(--latte);
 }
 .title{ margin:0; font-size: 2rem; font-weight: 800; }
@@ -85,42 +85,34 @@ header{
 
 /* Teacher Rule Box */
 .teacher-box{
-  max-width: 1100px; margin:10px auto 14px; padding:1rem;
+  max-width: 1200px; margin:10px auto 14px; padding:1rem;
   display:flex; gap:1rem; align-items:flex-start;
 }
 .teacher-box img{ width:46px; height:46px; object-fit:cover; }
 .teacher-box .rule{ font-size:1.05rem; }
 
-/* Layout: left bank | right content */
-main{ max-width: 1100px; margin: 0 auto 40px; padding: 0 12px; }
-.layout{ display:grid; gap:12px; grid-template-columns: 1fr; }
-@media (min-width: 980px){ .layout{ grid-template-columns: 320px 1fr; } }
-
-/* LEFT: Comma bank card */
-.left-card{ padding:.9rem; }
-.left-card h3{ margin:.2rem 0 .55rem 0; font-size:1.1rem; }
-#bank{
-  display:flex; flex-wrap:wrap; gap:.55rem;
-  min-height:82px; padding:.7rem;
-  border:2px dashed var(--border); border-radius:.8rem;
-  background:#fff2f6;
+/* Main layout: pushes content to the right to align with background composition */
+main{ max-width: 1200px; margin: 0 auto 40px; padding: 0 clamp(12px, 4vw, 32px); }
+.grid{
+  display:grid; gap: clamp(12px, 2.5vw, 24px);
+  grid-template-columns: 1fr;             /* mobile */
+  align-items: start;
 }
-.token{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:.35rem .6rem; font-size:1.6rem;
-  background:#fff; border:2px solid var(--accent); border-radius:.7rem;
-  cursor:grab; user-select:none; box-shadow:0 2px 6px rgba(0,0,0,.10);
+@media (min-width: 980px){
+  .grid{
+    /* left gutter (empty) + right content */
+    grid-template-columns: minmax(0, var(--content-left-col)) minmax(320px, 1fr);
+  }
 }
-/* No icon inside comma tokens */
 
-/* RIGHT: directions, toolbar, sentences */
-.right-panel .card{ padding:1rem; margin-bottom:12px; }
-.right-panel h3{ margin:.1rem 0 .6rem 0; }
+/* Right column panels (Directions+Bank and Sentences) */
+.panel{ padding: 1rem; }
+.panel h3{ margin:.1rem 0 .6rem 0; }
 
-/* Toolbar */
+/* Toolbar (rounds & check) */
 .toolbar{
   display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;
-  margin-top:.3rem; margin-bottom:.3rem;
+  margin:.4rem 0 .6rem;
 }
 button{
   padding:.55rem 1rem; border:none; border-radius:.6rem;
@@ -130,9 +122,27 @@ button{
 button.secondary{ background: var(--charcoal); }
 button.ghost{ background: var(--accent-weak); color: var(--accent); }
 
+/* Comma Bank placed under Directions */
+.bank{
+  margin-top:.6rem;
+  background:#fff2f6;
+  border:2px dashed var(--border);
+  border-radius:.8rem;
+  padding:.7rem;
+  min-height:82px;
+  display:flex; flex-wrap:wrap; gap:.55rem;
+}
+.token{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.35rem .6rem; font-size:1.6rem;
+  background:#fff; border:2px solid var(--accent); border-radius:.7rem;
+  cursor:grab; user-select:none; box-shadow:0 2px 6px rgba(0,0,0,.10);
+}
+/* No icon inside comma tokens */
+
 /* Sentences */
-.sentence-card{ padding:1rem; }
-.number{ font-weight:800; font-size:1.25rem; color:var(--latte); margin-right:.5rem; }
+.sentence-card{ padding:1rem; background:#ffffffcc; backdrop-filter: blur(2px); border:1px solid var(--border); border-radius:.9rem; box-shadow: var(--shadow); }
+.number{ font-weight:800; font-size:1.25rem; color: var(--latte); margin-right:.5rem; }
 .word{ display:inline-block; position:relative; padding:.1rem .25rem; }
 .word.drop-target{ outline:3px dashed var(--accent); border-radius:.25rem; background:#fff5fb; }
 
@@ -154,11 +164,12 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
 .incorrect{ background:#ffe6ef !important; box-shadow: inset 0 0 0 2px var(--bad); }
 
 .results{ text-align:center; font-weight:700; margin-top:.5rem; }
+.small-note{ color:#666; font-size:.95rem; margin:.4rem 0 0; }
 </style>
 </head>
 
 <body>
-  <!-- Background layer -->
+  <!-- Prominent background layer -->
   <div class="page-bg" aria-hidden="true"></div>
 
   <header>
@@ -166,9 +177,9 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
     <div class="tagline">@WritersCafe208</div>
   </header>
 
-  <!-- Teacher Rule Box (with apple) -->
+  <!-- Teacher Rule Box -->
   <div class="teacher-box" role="note" aria-label="Teacher rule">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png" alt="Apple icon" />
+    <img alt="apple icon" src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.png" />
     <div class="rule">
       <strong>Teacher Rule:</strong>
       Use a comma <em>after</em> an introductory word, phrase, or dependent clause when it comes at the
@@ -181,19 +192,14 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
   </div>
 
   <main>
-    <div class="layout">
-      <!-- LEFT: comma bank -->
-      <aside class="left-card">
-        <h3>Comma Bank</h3>
-        <div id="bank" aria-label="Comma bank (drag from here)"></div>
-        <p style="color:#666; font-size:.95rem; margin:.5rem 0 0;">
-          Drag any comma from the bank—there are unlimited commas.
-        </p>
-      </aside>
+    <div class="grid">
+      <!-- Column 1: empty spacer on desktop to align with background composition -->
+      <div aria-hidden="true"></div>
 
-      <!-- RIGHT: directions + sentences -->
-      <section class="right-panel">
-        <div class="card directions">
+      <!-- Column 2: content -->
+      <div>
+        <!-- Directions + Bank (one panel) -->
+        <section class="panel">
           <h3>Directions</h3>
           <p>Drag a comma from the café‑themed bank.</p>
           <p>Place it <b>after the introductory phrase</b> only when it appears at the <b>beginning</b> of the sentence.</p>
@@ -205,13 +211,18 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
             <button id="checkBtn">Check</button>
             <button id="resetBtn" class="secondary">Reset</button>
           </div>
-        </div>
 
-        <div class="card">
+          <h3 style="margin-top:.2rem;">Comma Bank</h3>
+          <div id="bank" class="bank" aria-label="Comma bank (drag from here)"></div>
+          <p class="small-note">There are unlimited commas.</p>
+        </section>
+
+        <!-- Sentences -->
+        <section class="panel">
           <div id="sentences"></div>
           <div id="results" class="results"></div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   </main>
 
@@ -269,7 +280,7 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
       });
       bank.appendChild(t);
     };
-    for (let i=0; i<12; i++) makeToken(); // visually plenty; logically infinite
+    for (let i=0; i<14; i++) makeToken(); // visually plenty; logically infinite
   }
 
   /* Build the round’s sentences */
@@ -410,8 +421,7 @@ button.ghost{ background: var(--accent-weak); color: var(--accent); }
   /* Buttons */
   document.getElementById('round1Btn').addEventListener('click', () => { currentRound = 0; buildRound(); });
   document.getElementById('round2Btn').addEventListener('click', () => { currentRound = 1; buildRound(); });
-  document.getElementById('checkBtn').addEventListener('click', checkAnswers);
-  document.getElementById('resetBtn').addEventListener('click', () => buildRound());
+  document.getElementById('checkBtn').addEventListenerment.getElementById('resetBtn').addEventListener('click', () => buildRound());
 
   // Initialize
   buildRound();
